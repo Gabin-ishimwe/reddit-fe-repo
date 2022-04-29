@@ -1,0 +1,9 @@
+.main {
+    /* flex: 1; */
+    /* background-color: #F4f5fA; */
+    padding: 30px 40px;
+    /* width:900px; */
+    display:flex;
+    /* border:2px solid red; */
+    margin:0;
+}

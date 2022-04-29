@@ -1,0 +1,65 @@
+.sidenav {
+    /* width: 200px; */
+    font-size: small;
+    /* box-shadow:  2px 0px 1px 1px #F4f5fa; */
+    border: 0px solid;
+    z-index: 1;
+    margin-right:20px;
+    margin-left:15px;
+    margin-top: 10px;
+    padding-top: 0px;
+    /* border:2px solid red; */
+    text-align: center;
+}
+
+.sidenav a {
+    text-decoration: none;
+    color: #808080;
+    
+}
+
+.sidenav__link li {
+ padding-top: 10px;
+ font-size: 1rem;
+}
+
+.sidenav hr {
+    margin: 2.5em 0 ;
+    border: 1px solid #f4f5fa;
+}
+
+.sidenav__link h5{
+    padding-top: 30px;
+}
+
+/* .sidenav__link {
+    text-align: left;
+    padding-left: 70px;
+} */
+.subreddits-list{
+    /* border:2px solid red; */
+    text-align: left;
+    padding-left: 50px;
+
+}
+
+/* .sidenav__subreddit{
+    padding-left: 0;
+} */
+
+button{
+    /* border:none;
+    background-color:rgb(252, 69, 4);
+    padding:5px 30px; */
+    display: block;
+    width: 100%;
+    border: none;
+    background-color:rgb(252, 69, 4);
+    /* padding: 14px 28px; */
+    padding-top:10px;
+    padding-bottom:10px;
+    font-size: 2em;
+    color:white;
+    cursor: pointer;
+    text-align: center;
+}
