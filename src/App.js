@@ -33,7 +33,7 @@ function Login() {
           <Route exact path="/create">
             <CreatePost />
           </Route>
-          <Route exact path="/signup">
+          <Route exact path="/signin">
             <SignUp />
           </Route>
           <Route exact path="/login">

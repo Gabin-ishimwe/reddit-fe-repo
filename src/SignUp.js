@@ -38,7 +38,7 @@ const SignUp = () => {
 
         }
         else {
-            swal("Passwords don't math!!", "Input correct password", "error")
+            swal("Passwords don't macth!!", "Input correct password", "error")
         }
 
 

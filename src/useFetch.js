@@ -3,6 +3,7 @@ import React from 'react';
 import { BiCommentDetail } from 'react-icons/bi'
 import { ImArrowUp, ImArrowDown } from 'react-icons/im'
 import { useHistory } from 'react-router-dom';
+import swal from 'sweetalert';
 
 const UseFetch = (url) => {
     const [data, setData] = useState(null);
@@ -11,30 +12,45 @@ const UseFetch = (url) => {
     const [posts, setPosts] = useState(null)
 
     let history = useHistory()
-    const upvote = async (id) => {
-        await fetch(`https://reddit-backend-clone.herokuapp.com/api/v1/posts/${id}/upvote`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        })
-            .then(res => res.json())
-            .then((data) => console.log(data),
-                (error) => console.log(error))
+    const upvoteClick = async (postId) => {
+        if (localStorage.getItem("token")) {
+            await fetch(`https://reddit-backend-clone.herokuapp.com/api/v1/posts/${postId}/upvote`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    console.log(data)
+                },
+                    (error) => console.log(error))
+
+        }
+        else {
+            swal("warning", "You need to login first", "warning")
+        }
+
     }
 
-    const downvote = async (id) => {
-        await fetch(`https://reddit-backend-clone.herokuapp.com/api/v1/posts/${id}/downvote`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        })
-            .then(res => res.json())
-            .then((data) => {
-                console.log(data)
-            },
-                (error) => console.log(error))
+    const downvoteClick = async (postId) => {
+        if (localStorage.getItem("token")) {
+            await fetch(`https://reddit-backend-clone.herokuapp.com/api/v1/posts/${postId}/downvote`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    console.log(data)
+                },
+                    (error) => console.log(error))
+        }
+
+        else {
+            swal("warning", "You need to login first", "warning")
+        }
     }
 
     useEffect(() => {
@@ -62,7 +78,7 @@ const UseFetch = (url) => {
                 setIsPending(false)
             })
 
-    })
+    }, [])
     if (posts !== null) {
 
         return (
@@ -71,9 +87,9 @@ const UseFetch = (url) => {
                     <div className="card mb-3" style={{ "max-width": "950px", "margin-left": "50px", "margin-right": "50px", "margin-top": "10px", "padding-top": "20px", "padding-bottom": "20px" }}>
                         <div className="row g-0">
                             <div className="col-md-1">
-                                <ImArrowUp className="up" style={{ "font-color": "white" }} onClick={() => upvote(post._id)} />
+                                <ImArrowUp className="up" style={{ "font-color": "white" }} onClick={() => upvoteClick(post._id)} />
                                 <p style={{ "margin-bottom": "0px" }}>{post.likes}</p>
-                                <ImArrowDown className="down" onClick={() => downvote(post._id)} />
+                                <ImArrowDown className="down" onClick={() => downvoteClick(post._id)} />
                             </div>
                             <div className="col-md-3">
                                 <img src={post.image[0]} className="img-fluid rounded-start" alt="..." style={{ "max-height": "200px" }} />

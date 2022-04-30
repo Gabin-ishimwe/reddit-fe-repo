@@ -3,6 +3,7 @@ import { BiCommentDetail } from 'react-icons/bi'
 import { ImArrowUp, ImArrowDown } from 'react-icons/im'
 import { useEffect, useState } from 'react';
 import React from 'react';
+import swal from 'sweetalert';
 
 const OnePost = () => {
     const [name, setName] = useState();
@@ -16,73 +17,94 @@ const OnePost = () => {
 
     useEffect(() => {
         fetch(`https://reddit-backend-clone.herokuapp.com/api/v1/posts/${localStorage.getItem("postId")}`, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
+            method: "GET"
         }).then(res => res.json())
             .then(data => {
                 console.log(data)
                 setPosts(data)
             })
     }, [])
-
-    const upvote = async (id) => {
-        await fetch(`https://reddit-backend-clone.herokuapp.com/api/v1/posts/${id}/upvote`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+    const upvoteClick = () => {
+        if (localStorage.getItem("token")) {
+            const upvote = async (id) => {
+                await fetch(`https://reddit-backend-clone.herokuapp.com/api/v1/posts/${id}/upvote`, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    }
+                })
+                    .then(res => res.json())
+                    .then((data) => {
+                        console.log(data)
+                        setLikes(data.data.likes)
+                        console.log(like)
+                    },
+                        (error) => console.log(error))
             }
-        })
-            .then(res => res.json())
-            .then((data) => {
-                console.log(data)
-                setLikes(data.data.likes)
-                console.log(like)
-            },
-                (error) => console.log(error))
+
+            upvote(localStorage.getItem("postId"))
+
+        }
+        else {
+            swal("warning", "You need to login first", "warning")
+        }
+
     }
 
-    const downvote = async (id) => {
-        await fetch(`https://reddit-backend-clone.herokuapp.com/api/v1/posts/${id}/downvote`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+    const downvoteClick = () => {
+        if (localStorage.getItem("token")) {
+            const downvote = async (id) => {
+                await fetch(`https://reddit-backend-clone.herokuapp.com/api/v1/posts/${id}/downvote`, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    }
+                })
+                    .then(res => res.json())
+                    .then((data) => {
+                        console.log(data)
+                        setLikes(data.data.likes)
+                        console.log(like)
+                    },
+                        (error) => console.log(error))
             }
-        })
-            .then(res => res.json())
-            .then((data) => {
-                console.log(data)
-                setLikes(data.data.likes)
-                console.log(like)
-            },
-                (error) => console.log(error))
+
+            downvote(localStorage.getItem(localStorage.getItem("postId")))
+        }
+        else {
+            swal("warning", "You need to login first", "warning")
+        }
     }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await fetch(`https://reddit-backend-clone.herokuapp.com/api/v1/posts/${localStorage.getItem("postId")}/comments`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name: name,
-                content: comment
-            })
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                setdisplayName(data.data.name)
-                setdisplayComment(data.data.content)
-            })
-
         const names = { name }
         const comments = { comment };
-
         console.log(comments, names);
+        if (localStorage.getItem("token")) {
+            await fetch(`https://reddit-backend-clone.herokuapp.com/api/v1/posts/${localStorage.getItem("postId")}/comments`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    content: comment
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    setdisplayName(data.data.name)
+                    setdisplayComment(data.data.content)
+                })
+        }
+        else {
+            swal("warning", "You need to login first", "warning")
+        }
+
 
     };
     if (posts !== null) {
@@ -93,9 +115,9 @@ const OnePost = () => {
                     <div className="row g-0 ms-4 me-4">
                         <div className="row">
                             <div className="col-md-1">
-                                <ImArrowUp className="up" style={{ "font-color": "white" }} onClick={() => upvote(localStorage.getItem("postId"))} />
+                                <ImArrowUp className="up" style={{ "font-color": "white" }} onClick={upvoteClick} />
                                 <p style={{ "margin-bottom": "0px" }}>{posts.data.likes}</p>
-                                <ImArrowDown className="down" onClick={() => downvote(localStorage.getItem("postId"))} />
+                                <ImArrowDown className="down" onClick={downvoteClick} />
                             </div>
                             <div className="col-md-3">
                                 <img src={posts.data.image[0]} className="img-fluid rounded-start" alt="..." style={{ "max-height": "200px" }} />
@@ -109,7 +131,7 @@ const OnePost = () => {
                                     <p style={{"display":"inline-block","padding-right":"20px"}}><small className="text-muted">at: {posts.date}</small></p>
                                 </div> */}
                                 <h5 className="card-title ">{posts.data.title}</h5>
-                                <p className="card-text mt-3 mb-5">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <p className="card-text mt-3 mb-5">{posts.data.content}</p>
                             </div>
                             <div className="comments d-inline-flex" style={{ "text-align": "left", "position": "absolute", "bottom": "0px" }}>
                                 <BiCommentDetail style={{ "height": "25px", "margin-left": "20px", "margin-right": "10px" }} />

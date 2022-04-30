@@ -15,23 +15,23 @@ function SideNav() {
   return (
     <div className="sidenav col-md-2">
 
-      <a href="create">
+      <a href="/create">
         <button type="button" class="create-post">Create Post</button>
       </a>
- 
+
       <div className="sidenav__link">
         <h5><strong>Subreddits</strong></h5>
         <div className="subreddits-list">
-        <ul className="sidenav__subreddit">
-          
-          {subreddits.map(subreddit => (
+          <ul className="sidenav__subreddit">
+
+            {subreddits.map(subreddit => (
               <li><Link to={`/r/${subreddit}`}>{subreddit}</Link></li>
-          ))}
-        </ul>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
   );
 }
- 
+
 export default SideNav;

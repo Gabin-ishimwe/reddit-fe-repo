@@ -29,7 +29,6 @@ padding: 10px;
 .header__right {
   display: flex;
   /* border:2px solid red; */
-  width:1240px;
   align-items: center;
   justify-content: flex-end;
 }
@@ -43,7 +42,6 @@ padding: 10px;
   border-radius: 50%;
 }
 .header__user{
-  display:none;
   padding-right: 130px;
 }
 .header__right > i {
@@ -189,7 +187,7 @@ padding: 10px;
 }
 
 .navbar-brand{
-  padding: 50px;
+  padding: 20px;
 }
 .signup{
   padding-right: 200px;

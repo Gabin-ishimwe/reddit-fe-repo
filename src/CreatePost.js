@@ -14,26 +14,32 @@ function CreatePost() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (localStorage.getItem("token")) {
+            const post = { category, title, caption, image };
+            console.log(post);
+            let form = new FormData()
+            form.append("title", title)
+            form.append("content", caption)
+            form.append("image", image)
+            form.append("category", category)
+            await fetch("https://reddit-backend-clone.herokuapp.com/api/v1/posts", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
+                body: form
+            }).then(res => res.json())
+                .then((data) => {
+                    console.log(data)
+                    history.push("/")
+                },
+                    (error) => console.log(error))
 
-        const post = { category, title, caption, image };
-        console.log(post);
-        let form = new FormData()
-        form.append("title", title)
-        form.append("content", caption)
-        form.append("image", image)
-        form.append("category", "lorem ipsum")
-        await fetch("https://reddit-backend-clone.herokuapp.com/api/v1/posts", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            },
-            body: form
-        }).then(res => res.json())
-            .then((data) => {
-                console.log(data)
-                history.push("/")
-            },
-                (error) => console.log(error))
+        }
+        else {
+            swal("warning", "you need to first login", "warning")
+        }
+
 
     };
     const categories = [
