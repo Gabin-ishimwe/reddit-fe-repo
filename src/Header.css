@@ -43,7 +43,6 @@ padding: 10px;
   border-radius: 50%;
 }
 .header__user{
-  display:none;
   padding-right: 130px;
 }
 .header__right > i {

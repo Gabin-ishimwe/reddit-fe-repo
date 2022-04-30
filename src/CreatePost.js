@@ -21,7 +21,7 @@ function CreatePost() {
         form.append("title", title)
         form.append("content", caption)
         form.append("image", image)
-        form.append("category", "lorem ipsum")
+        form.append("category", category)
         await fetch("https://reddit-backend-clone.herokuapp.com/api/v1/posts", {
             method: "POST",
             headers: {

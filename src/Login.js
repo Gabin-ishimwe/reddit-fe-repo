@@ -67,7 +67,7 @@ const UserLogin = () => {
                     </div>
 
                     <button type="submit" className="btn btn-primary col-md-12 mt-4 mb-5" style={{ backgroundColor: 'rgb(252, 69, 4)', color: '#fff', border: 'none' }}>login</button>
-                    <p className="text-center">Don't have an account? <a href="/signup" style={{ color: 'rgb(252, 69, 4)' }}>Sign up</a></p>
+                    <p className="text-center">Don't have an account? <a href="/signin" style={{ color: 'rgb(252, 69, 4)' }}>Sign up</a></p>
                 </form>
             </div>
         </div>
